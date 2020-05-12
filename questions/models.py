@@ -12,3 +12,6 @@ class Question(models.Model):
     ]
     type = models.IntegerField(choices=ANSWERS_CHOICES)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
