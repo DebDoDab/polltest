@@ -1,5 +1,5 @@
 from django.db import models
-from polltest.polls.models import Poll
+from polls.models import Poll
 
 
 # Create your models here.
@@ -10,5 +10,5 @@ class Question(models.Model):
         (1, 'Choose one answer'),
         (2, 'Choose several answers'),
     ]
-    type = models.IntegerField(choises=ANSWERS_CHOICES)
+    type = models.IntegerField(choices=ANSWERS_CHOICES)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)

@@ -1,5 +1,5 @@
 from django.db import models
-from polltest.questions.models import Question
+from questions.models import Question
 
 
 # Create your models here.
