@@ -6,3 +6,6 @@ from questions.models import Question
 class Answer(models.Model):
     text = models.CharField(max_length=256)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
