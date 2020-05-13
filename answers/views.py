@@ -8,3 +8,10 @@ from rest_framework import viewsets
 class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+
+    def get_queryset(self):
+        queryset = Answer.objects.all()
+        questionId = self.request.query_params.get('question_id', None)
+        if questionId is not None:
+            queryset = queryset.filter(question_id=questionId)
+        return queryset
