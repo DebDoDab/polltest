@@ -1,3 +1,4 @@
+import useranswers
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
@@ -14,4 +15,7 @@ router.register('useranswers', viewset=UserAnswerViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('getstats', useranswers.views.getStats),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('djoser.urls')),
 ]
