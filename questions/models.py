@@ -11,7 +11,11 @@ class Question(models.Model):
         (2, 'Choose several answers'),
     ]
     type = models.IntegerField(choices=ANSWERS_CHOICES)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='poll')
+    prevQuestion = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='prev', default=None,
+                                     null=True, blank=True)
+    nextQuestion = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='next', default=None,
+                                     null=True, blank=True)
 
     def __str__(self):
         return self.text
