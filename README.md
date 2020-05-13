@@ -8,7 +8,7 @@ Using CLI run
 `python3 manage.py createsuperuser`
 then go to `/auth/jwt/create` with loginData. You'll receive an access_token and refresh_token. Save them in cookies.
 
-## create poll
+## Сreate a poll
 ###### You should be authorized
 POST a new Poll with it's name: `POST /polls` <br><br>
 POST all your questions using `POST /questions`, don't forget to send your new poll's id <br>
@@ -19,4 +19,12 @@ POST all your answers using `POST /answers` <br>
 `/polls?active=true` - get all polls that are currently available
 
 ## Get User stats
-###### user_id is just a 
+###### user_id is just a unique number
+`/getstats` all info in JSON about User's polls
+
+## Take a poll
+Start with a `/questions?first_from=<:int>` where int is your poll ID. It will return you first question. <br><br>
+Get answers with `/answers?question_id=<:int>` <br><br>
+You can move back and forward using `prev` and `next` parameters of that question <br><br>
+Send your answer with `POST /useranswers`
+
