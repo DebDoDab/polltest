@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class UserAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
+    user = models.IntegerField()
     stringAns = models.CharField(max_length=256)
     # TODO Add PostgreS ArrayField arrayAns
     ANSWER_CHOICES = [

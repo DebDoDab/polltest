@@ -10,7 +10,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data['question'] = validated_data['questionId']
         validated_data.pop('questionId')
-        Answer.objects.create(**validated_data)
+        return Answer.objects.create(**validated_data)
 
     class Meta:
         model = Answer
