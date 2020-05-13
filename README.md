@@ -10,6 +10,7 @@ Install requirements `pip3 install -r requirements.txt` <br>
 Run `python3 manage.py makemigrations` <br>
 Run `python3 manage.py migrate` <br>
 Run `python3 manage.py createsuperuser` <br>
+Add your domain to `ALLOWED_HOSTS` <br>
 Run `python3 manage.py runserver` <br>
 
 ## Usage
