@@ -31,20 +31,19 @@ ALLOWED_HOSTS = ['polltest.vadi.tel', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
-    'questions',
-    'answers',
-    'useranswers',
-    'api',
-    'djoser',
+
+    'rest_framework',
     'rest_framework_simplejwt',
+    'djoser',
+
+    'polls',
+    'api',
 ]
 
 MIDDLEWARE = [
