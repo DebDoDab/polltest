@@ -4,16 +4,16 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from .models import Answer, Poll, Question, UserAnswer
 from .serializers import AnswerSerializer, PollSerializer, QuestionSerializer, UserAnswerSerializer
-from .services import getStatistics
+from .services import get_statistics
 
 
-def getStats(request):
+def get_stats(request):
     """Returns page with JSON statistic for a given user"""
-    userId = request.GET.get('user_id')
-    if not userId.isdecimal():
+    user_id = request.GET.get('user_id')
+    if not user_id.isdecimal():
         raise Http404
-    userId = int(userId)
-    return HttpResponse(getStatistics(userId))
+    user_id = int(user_id)
+    return HttpResponse(get_statistics(user_id))
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -23,9 +23,9 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Answer.objects.all()
-        questionId = self.request.query_params.get('question_id', None)
-        if questionId is not None:
-            queryset = queryset.filter(question_id=questionId)
+        question_id = self.request.query_params.get('question_id', None)
+        if question_id is not None:
+            queryset = queryset.filter(question_id=question_id)
         return queryset
 
 
@@ -49,13 +49,12 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Question.objects.all()
-        user = self.request.user
-        firstFrom = self.request.query_params.get('first_from', None)
-        pollId = self.request.query_params.get('poll_id', None)
-        if firstFrom is not None:
-            queryset = queryset.filter(poll_id=firstFrom, prev=None)
-        elif pollId is not None:
-            queryset = queryset.filter(poll_id=pollId)
+        first_from = self.request.query_params.get('first_from', None)
+        poll_id = self.request.query_params.get('poll_id', None)
+        if first_from is not None:
+            queryset = queryset.filter(poll_id=first_from, prev=None)
+        elif poll_id is not None:
+            queryset = queryset.filter(poll_id=poll_id)
 
         return queryset
 
