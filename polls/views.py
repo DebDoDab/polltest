@@ -8,6 +8,7 @@ from .services import getStatistics
 
 
 def getStats(request):
+    """Returns page with JSON statistic for a given user"""
     userId = request.GET.get('user_id')
     if not userId.isdecimal():
         raise Http404
@@ -16,6 +17,7 @@ def getStats(request):
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
+    """ViewSet for Answer model"""
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
 
@@ -28,6 +30,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
 
 class PollViewSet(viewsets.ModelViewSet):
+    """ViewSet for Poll model"""
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
 
@@ -40,6 +43,7 @@ class PollViewSet(viewsets.ModelViewSet):
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
+    """ViewSet for Question model"""
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
@@ -57,14 +61,17 @@ class QuestionViewSet(viewsets.ModelViewSet):
 
 
 class UserAnswerViewSet(viewsets.ModelViewSet):
+    """ViewSet for UserAnswer model"""
     queryset = UserAnswer.objects.all()
     serializer_class = UserAnswerSerializer
+    # Allows creating UserAnswer instance everybody, keeping information viewable only to admins
     permission_classes_by_action = {'create': [AllowAny]}
 
     def get_permissions(self):
+        """Custom permission"""
         try:
-            # return permission_classes depending on `action`
+            # Allows creating anybody
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
-            # action is not set return default permission_classes
+            # otherwise (if it's not creating) return default permissions
             return [permission() for permission in self.permission_classes]

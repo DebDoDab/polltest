@@ -4,6 +4,7 @@ import json
 
 
 def getStatistics(userId):
+    """Get all answered questions for given user"""
     class AnswerTemp:
         def __init__(self, text, answerId=None):
             self.id = answerId

@@ -2,52 +2,53 @@ from django.db import models
 
 
 class Poll(models.Model):
-    name = models.CharField(max_length=256)
-    startDate = models.DateTimeField()
-    endDate = models.DateTimeField()
-    description = models.CharField(max_length=512)
+    """Model for polls"""
+    name = models.CharField(max_length=256, verbose_name="Poll name")
+    startDate = models.DateTimeField(verbose_name="Date and time of opening the poll")
+    endDate = models.DateTimeField(verbose_name="Date and time of closing the poll")
+    description = models.CharField(max_length=512, verbose_name="Poll description")
 
     def __str__(self):
         return self.name
 
 
 class Question(models.Model):
-    text = models.CharField(max_length=512)
-    ANSWERS_CHOICES = [
+    """Model for questions with answers and some adjacent info"""
+    text = models.CharField(max_length=512, verbose_name="Question text")
+    ANSWERS_TYPE_CHOICES = [
         (0, 'Enter your string'),
         (1, 'Choose one answer'),
         (2, 'Choose several answers'),
     ]
-    type = models.IntegerField(choices=ANSWERS_CHOICES)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='poll')
+    type = models.IntegerField(choices=ANSWERS_TYPE_CHOICES, verbose_name="Type of answering the question")
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name='poll',
+                             verbose_name="Link to the adjacent poll")
     prevQuestion = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='prev', default=None,
-                                     null=True, blank=True)
+                                     null=True, blank=True, verbose_name="Link to the previous question")
     nextQuestion = models.ForeignKey("Question", on_delete=models.CASCADE, related_name='next', default=None,
-                                     null=True, blank=True)
+                                     null=True, blank=True, verbose_name="Link to the next question")
 
     def __str__(self):
         return self.text
 
 
 class Answer(models.Model):
-    text = models.CharField(max_length=256)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    """Model for answers"""
+    text = models.CharField(max_length=256, verbose_name="Text of an answer")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="Link to the adjacent question")
 
     def __str__(self):
         return self.text
 
 
 class UserAnswer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    user = models.IntegerField()
-    stringAns = models.CharField(max_length=256)
+    """Model for storage users' answers"""
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="Link to the adjacent question")
+    user = models.IntegerField(verbose_name="Id of adjacent user")
+    stringAns = models.CharField(max_length=256, verbose_name="User's answer")
     # TODO Add PostgreS ArrayField arrayAns
-    ANSWER_CHOICES = [
-        (0, 'Enter your string'),
-        (1, 'Choose one answer'),
-        (2, 'Choose several answers'),
-    ]
-    type = models.IntegerField(choices=ANSWER_CHOICES)
+    # Maybe it's better to take type from adjacent question?
+    type = models.IntegerField(choices=Question.ANSWERS_TYPE_CHOICES, verbose_name="Type of answering the question")
 
     def __str__(self):
         return f'Answer by {self.user} - {self.stringAns}'

@@ -5,6 +5,7 @@ from .models import Answer, Poll, Question, UserAnswer
 
 
 class PollSerializer(serializers.ModelSerializer):
+    """Serializer for Poll model"""
     name = serializers.CharField(max_length=256)
     startDate = serializers.DateTimeField(read_only=True)
     endDate = serializers.DateTimeField()
@@ -16,6 +17,7 @@ class PollSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    """Serializer for Answer model"""
     text = serializers.CharField(max_length=256)
     question = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     questionId = serializers.IntegerField(write_only=True)
@@ -31,13 +33,9 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    """Serializer for Question model"""
     text = serializers.CharField(max_length=512)
-    ANSWERS_CHOICES = [
-        (0, 'Enter your string'),
-        (1, 'Choose one answer'),
-        (2, 'Choose several answers'),
-    ]
-    type = serializers.ChoiceField(choices=ANSWERS_CHOICES)
+    type = serializers.ChoiceField(choices=Question.ANSWERS_TYPE_CHOICES)
     poll = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     pollId = serializers.IntegerField(write_only=True)
     prev = serializers.PrimaryKeyRelatedField(many=True, read_only=True, default=None)
@@ -60,11 +58,12 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class UserAnswerSerializer(serializers.ModelSerializer):
+    """Serializer for UserAnswer model"""
     question = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     questionId = serializers.IntegerField(write_only=True)
     user = serializers.IntegerField()
     stringAns = serializers.CharField(max_length=256)
-    type = serializers.ChoiceField(choices=UserAnswer.ANSWER_CHOICES)
+    type = serializers.ChoiceField(choices=Question.ANSWERS_TYPE_CHOICES)
 
     def create(self, validated_data):
         question = Question.objects.get(id=validated_data['questionId'])
