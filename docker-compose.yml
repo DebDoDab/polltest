@@ -1,0 +1,24 @@
+version: "3"
+volumes:
+  pgdata:
+services:
+  python: &python
+    build:
+      context: .
+      dockerfile: docker/dev/python/Dockerfile
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12.3
+    environment:
+      POSTGRES_USER: 'polltest'
+      POSTGRES_DB: 'polltest'
+      POSTGRES_PASSWORD: 'polltest'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5433:5432

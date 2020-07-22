@@ -1,0 +1,28 @@
+version: "3"
+volumes:
+  pgdata:
+  static_files:
+services:
+  python: &python
+    build:
+      context: .
+      dockerfile: docker/prod/python/Dockerfile
+    environment:
+      - DJANGO_SETTINGS_MODULE=polltest.settings.prod
+    volumes:
+      - ./app:/app
+      - static_files:/static_files
+    ports:
+      - 8002:8002
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12.3
+    environment:
+      POSTGRES_USER: 'polltest'
+      POSTGRES_DB: 'polltest'
+      POSTGRES_PASSWORD: 'polltest'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5433:5432

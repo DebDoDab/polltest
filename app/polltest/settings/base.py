@@ -25,7 +25,7 @@ SECRET_KEY = 'b1gl5!gqe4fjihpkd)=hh+^5fmc3_%nj9t@())8moj4$(=c^k^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['polltest.vadi.tel', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['www.polltest.vadi.tel', 'polltest.vadi.tel', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'polltest.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'polltest',
+        'USER': 'polltest',
+        'PASSWORD': 'polltest',
+        'HOST': 'postgres',
+        'PORT': '5432'
     }
 }
 
