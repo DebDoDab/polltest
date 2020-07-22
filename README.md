@@ -1,17 +1,33 @@
 # PollTest
 This API for Poll services.
-#### You can [try it out](http://polltest.vadi.tel)
+#### You can [try it out](https://polltest.vadi.tel)
 
-## Build
-Run `git clone https://github.com/DebDoDab/polltest.git` <br>
-Setup venv using `python3 -m venv venv` <br>
-Activate venv `source venv/bin/activate` <br>
-Install requirements `pip3 install -r requirements.txt` <br>
-Run `python3 manage.py makemigrations` <br>
-Run `python3 manage.py migrate` <br>
-Run `python3 manage.py createsuperuser` <br>
-Add your domain to `ALLOWED_HOSTS` <br>
-Run `python3 manage.py runserver` <br>
+## Installation
+* Clone git repo
+    ```
+    git clone https://github.com/DebDoDab/polltest.git
+    ```
+* Move into that directory
+  ```
+  cd polltest
+  ```
+* _(Optional)_ write app/studypunch/settings/prod.py
+    * copy file from exaple and edit it (especially SECRET_KEY and ALLOWED_HOSTS)
+        ```
+        cp app/polltest/settings/prod_example.py app/polltest/settings/prod.py
+        vim app/polltest/settings/prod.py
+        ```
+* Run docker-container
+    * in development
+        ```
+        docker-compose build
+        docker-compose up
+        ```
+    * or in production
+        ```
+        docker-compose -f prod.yml build
+        docker-compose -f prod.yml up
+        ```
 
 ## Usage
 
